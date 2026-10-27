@@ -23,7 +23,7 @@ export const Route = createFileRoute("/esqueci-senha")({
 function Page() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
-  async function submit(e: React.FormEvent<HTMLFormElement>) {
+  async function submit(e: React.FormEvent<HTMLFormElement>): Promise<unknown> {
     e.preventDefault();
     const email = z.string().trim().email().safeParse(new FormData(e.currentTarget).get("email"));
     if (!email.success) return toast.error("E-mail inválido");

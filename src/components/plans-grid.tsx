@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { plansQuery, publicSettingsQuery, vipWhatsappLink } from "@/lib/account";
 
-export function PlansGrid({ email, currentPlan }: { email?: string; currentPlan?: string }) {
+export function PlansGrid({ email, currentPlan }: { email?: string | undefined; currentPlan?: string | undefined }) {
   const plans = useQuery(plansQuery);
   const settings = useQuery(publicSettingsQuery);
   const list = plans.data ?? [];
