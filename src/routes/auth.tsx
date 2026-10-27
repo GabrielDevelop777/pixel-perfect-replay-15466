@@ -35,11 +35,11 @@ function AuthPage() {
   const [sent, setSent] = useState(false);
   const navigate = useNavigate();
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>): Promise<unknown> {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const parsed = schema.safeParse({ email: fd.get("email"), password: fd.get("password"), name: fd.get("name") || undefined });
-    if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) return toast.error(parsed.error.issues[0]?.message ?? "Dados inválidos");
     setLoading(true);
     try {
       if (mode === "signup") {
@@ -63,7 +63,7 @@ function AuthPage() {
     }
   }
 
-  async function google() {
+  async function google(): Promise<unknown> {
     const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
     if (r.error) return toast.error("Não foi possível entrar com Google.");
     if (r.redirected) return;

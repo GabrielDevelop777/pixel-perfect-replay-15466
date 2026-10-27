@@ -22,7 +22,7 @@ export const Route = createFileRoute("/redefinir-senha")({
 function Page() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  async function submit(e: React.FormEvent<HTMLFormElement>) {
+  async function submit(e: React.FormEvent<HTMLFormElement>): Promise<unknown> {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const p = String(fd.get("password") ?? "");
