@@ -55,7 +55,7 @@ function runway(apiKey: string): VideoProvider {
 }
 
 export function getVideoProvider(): VideoProvider | null {
-  const key = process.env.RUNWAY_API_KEY;
+  const key = process.env['RUNWAY_API_KEY'];
   if (key) return runway(key);
   return null;
 }

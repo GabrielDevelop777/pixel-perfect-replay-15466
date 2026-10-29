@@ -22,16 +22,16 @@ export const Route = createFileRoute("/redefinir-senha")({
 function Page() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  async function submit(e: React.FormEvent<HTMLFormElement>): Promise<unknown> {
+  async function submit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const p = String(fd.get("password") ?? "");
-    if (p.length < 8) return toast.error("A senha precisa ter ao menos 8 caracteres");
-    if (p !== fd.get("confirm")) return toast.error("As senhas não conferem");
+    if (p.length < 8) { toast.error("A senha precisa ter ao menos 8 caracteres"); return; }
+    if (p !== fd.get("confirm")) { toast.error("As senhas não conferem"); return; }
     setLoading(true);
     const { error } = await supabase.auth.updateUser({ password: p });
     setLoading(false);
-    if (error) return toast.error("Link inválido ou expirado. Solicite um novo.");
+    if (error) { toast.error("Link inválido ou expirado. Solicite um novo."); return; }
     toast.success("Senha atualizada!");
     navigate({ to: "/dashboard" });
   }

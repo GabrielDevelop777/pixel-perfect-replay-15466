@@ -23,10 +23,10 @@ export const Route = createFileRoute("/esqueci-senha")({
 function Page() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
-  async function submit(e: React.FormEvent<HTMLFormElement>): Promise<unknown> {
+  async function submit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
     const email = z.string().trim().email().safeParse(new FormData(e.currentTarget).get("email"));
-    if (!email.success) return toast.error("E-mail inválido");
+    if (!email.success) { toast.error("E-mail inválido"); return; }
     setLoading(true);
     await supabase.auth.resetPasswordForEmail(email.data, { redirectTo: `${window.location.origin}/redefinir-senha` });
     setLoading(false);
