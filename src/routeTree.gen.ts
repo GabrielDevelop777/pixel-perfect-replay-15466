@@ -17,6 +17,7 @@ import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as RedefinirSenhaRouteImport } from './routes/redefinir-senha'
 import { Route as TermosRouteImport } from './routes/termos'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated/conta'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedGerarRouteImport } from './routes/_authenticated/gerar'
@@ -62,6 +63,11 @@ const TermosRoute = TermosRouteImport.update({
   path: '/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedContaRoute = AuthenticatedContaRouteImport.update({
   id: '/conta',
   path: '/conta',
@@ -96,6 +102,7 @@ export interface FileRoutesByFullPath {
   '/privacidade': typeof PrivacidadeRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
   '/termos': typeof TermosRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/conta': typeof AuthenticatedContaRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/gerar': typeof AuthenticatedGerarRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByTo {
   '/privacidade': typeof PrivacidadeRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
   '/termos': typeof TermosRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/conta': typeof AuthenticatedContaRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/gerar': typeof AuthenticatedGerarRoute
@@ -126,6 +134,7 @@ export interface FileRoutesById {
   '/privacidade': typeof PrivacidadeRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
   '/termos': typeof TermosRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/conta': typeof AuthenticatedContaRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/gerar': typeof AuthenticatedGerarRoute
@@ -142,6 +151,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/redefinir-senha'
     | '/termos'
+    | '/admin'
     | '/conta'
     | '/dashboard'
     | '/gerar'
@@ -156,6 +166,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/redefinir-senha'
     | '/termos'
+    | '/admin'
     | '/conta'
     | '/dashboard'
     | '/gerar'
@@ -171,6 +182,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/redefinir-senha'
     | '/termos'
+    | '/_authenticated/admin'
     | '/_authenticated/conta'
     | '/_authenticated/dashboard'
     | '/_authenticated/gerar'
@@ -247,6 +259,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/conta': {
       id: '/_authenticated/conta'
       path: '/conta'
@@ -286,6 +305,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedContaRoute: typeof AuthenticatedContaRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedGerarRoute: typeof AuthenticatedGerarRoute
@@ -294,6 +314,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedContaRoute: AuthenticatedContaRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedGerarRoute: AuthenticatedGerarRoute,
