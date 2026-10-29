@@ -28,14 +28,14 @@ function Account() {
 
   async function saveName() {
     const { error } = await supabase.from("profiles").update({ full_name: name.trim().slice(0, 100) }).eq("id", acc!.userId);
-    if (error) return toast.error("Não foi possível salvar.");
+    if (error) { toast.error("Não foi possível salvar."); return; }
     toast.success("Nome atualizado.");
     qc.invalidateQueries({ queryKey: ["account"] });
   }
   async function savePwd() {
-    if (pwd.length < 8) return toast.error("A senha precisa ter ao menos 8 caracteres.");
+    if (pwd.length < 8) { toast.error("A senha precisa ter ao menos 8 caracteres."); return; }
     const { error } = await supabase.auth.updateUser({ password: pwd });
-    if (error) return toast.error("Não foi possível alterar a senha.");
+    if (error) { toast.error("Não foi possível alterar a senha."); return; }
     setPwd("");
     toast.success("Senha alterada.");
   }

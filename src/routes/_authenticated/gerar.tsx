@@ -62,17 +62,17 @@ function Generator() {
 
   function pick(f: File | undefined) {
     if (!f) return;
-    if (!["image/jpeg", "image/png", "image/webp"].includes(f.type)) return toast.error("Use JPG, PNG ou WEBP.");
-    if (f.size > 10 * 1024 * 1024) return toast.error("A imagem deve ter no máximo 10MB.");
+    if (!["image/jpeg", "image/png", "image/webp"].includes(f.type)) { toast.error("Use JPG, PNG ou WEBP."); return; }
+    if (f.size > 10 * 1024 * 1024) { toast.error("A imagem deve ter no máximo 10MB."); return; }
     setFile(f);
     setPreview(URL.createObjectURL(f));
   }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!file || !acc.data) return toast.error("Envie uma imagem.");
-    if (mode === "image_to_video" && prompt.trim().length < 3) return toast.error("Descreva o movimento desejado.");
-    if (mode === "product_ad" && p.name.trim().length < 2) return toast.error("Informe o nome do produto.");
+    if (!file || !acc.data) { toast.error("Envie uma imagem."); return; }
+    if (mode === "image_to_video" && prompt.trim().length < 3) { toast.error("Descreva o movimento desejado."); return; }
+    if (mode === "product_ad" && p.name.trim().length < 2) { toast.error("Informe o nome do produto."); return; }
     setBusy(true);
     try {
       const ext = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
